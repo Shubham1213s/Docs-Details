@@ -1,42 +1,21 @@
-# Database Diagram (TeamFlow)
+# Database Diagram (Simple)
 
-This document contains the standalone Entity Relationship Diagram (ERD) for the TeamFlow database.
+This is a simple version of the TeamFlow database diagram.
 
 ```mermaid
-erDiagram
-  USERS {
-    int id PK
-    string name
-    string email
-    string location
-    string role
-    string password
-    int team_id FK
-  }
+flowchart LR
+  T[TEAMS table\nid, name, location, leader_id, org_leader_id]
+  U[USERS table\nid, name, email, location, role, password, team_id]
+  A[ACHIEVEMENTS table\nid, team_id, month, description]
 
-  TEAMS {
-    int id PK
-    string name
-    string location
-    int leader_id FK
-    int org_leader_id FK
-  }
-
-  ACHIEVEMENTS {
-    int id PK
-    int team_id FK
-    string month
-    string description
-  }
-
-  TEAMS ||--o{ USERS : contains_members
-  USERS ||--o{ TEAMS : leads
-  USERS ||--o{ TEAMS : org_leads
-  TEAMS ||--o{ ACHIEVEMENTS : has_achievements
+  U -->|team_id| T
+  A -->|team_id| T
+  T -->|leader_id| U
+  T -->|org_leader_id| U
 ```
 
-## Relationship Summary
-- One team can have many users (`users.team_id -> teams.id`).
-- One user can lead many teams (`teams.leader_id -> users.id`).
-- One user can be organization leader for many teams (`teams.org_leader_id -> users.id`).
-- One team can have many achievements (`achievements.team_id -> teams.id`).
+## Easy Meaning
+- Each user belongs to one team.
+- Each achievement belongs to one team.
+- A team can have one leader user.
+- A team can have one org leader user.
