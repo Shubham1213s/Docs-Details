@@ -1,4 +1,4 @@
-# Database Diagram (Simple)
+# Database Schema Diagram (Simple)
 
 This is a simple version of the TeamFlow database diagram.
 
